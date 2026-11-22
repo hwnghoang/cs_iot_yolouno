@@ -1,0 +1,17 @@
+{
+  "folders": [
+    { "name": "iot (root)", "path": "." },
+    { "path": "YoloUNO_PlatformIO-LED_Blinky" },
+    { "path": "YoloUNO_PlatformIO-LED_NEO_Blinky" },
+    { "path": "YoloUNO_PlatformIO-RTOS_Task" },
+    { "path": "YoloUNO_PlatformIO-DHT20_LCD" },
+    { "path": "YoloUNO_PlatformIO-Semaphore_Binary" },
+    { "path": "YoloUNO_PlatformIO-Semaphore_Counting" },
+    { "path": "YoloUNO_PlatformIO-Semaphore_Queue" },
+    { "path": "YoloUNO_PlatformIO-Semaphore_FreeRTOS" },
+    { "path": "YoloUNO_PlatformIO-Semaphore_Webserver" }
+  ],
+  "settings": {
+    "platformio-ide.activateProjectOnTextEditorChange": true
+  }
+}
