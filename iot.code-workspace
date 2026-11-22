@@ -9,7 +9,8 @@
     { "path": "YoloUNO_PlatformIO-Semaphore_Counting" },
     { "path": "YoloUNO_PlatformIO-Semaphore_Queue" },
     { "path": "YoloUNO_PlatformIO-Semaphore_FreeRTOS" },
-    { "path": "YoloUNO_PlatformIO-Semaphore_Webserver" }
+    { "path": "YoloUNO_PlatformIO-Semaphore_Webserver" },
+    { "path": "YoloUNO_PlatformIO-CoreIOT_MQTT" }
   ],
   "settings": {
     "platformio-ide.activateProjectOnTextEditorChange": true

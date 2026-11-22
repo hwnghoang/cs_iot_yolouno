@@ -1,5 +1,4 @@
 #include "temp_humi_monitor.h"
-
 DHT20 dht20;
 LiquidCrystal_I2C lcd(33,16,2);
 
@@ -33,47 +32,42 @@ bool scanI2CBus() {
 }
 
 void temp_humi_monitor(void *pvParameters){
-    (void)pvParameters;
 
-    // Give the serial monitor time to attach after the board resets.
-    vTaskDelay(pdMS_TO_TICKS(2000));
-    Serial.println("Starting DHT20 I2C check...");
-
-    // This initializes Wire with the board's SDA/SCL pins and checks address 0x38.
-    const bool sensorConnected = dht20.begin(DHT20_SDA_PIN, DHT20_SCL_PIN);
-    const bool dht20Found = scanI2CBus();
-    if (!sensorConnected || !dht20Found) {
-        Serial.println("DHT20 initialization failed; check SDA, SCL, power, and wiring.");
-        vTaskDelete(nullptr);
-        return;
-    }
+    Wire.begin(11, 12);
+    Serial.begin(115200);
+    dht20.begin();
 
     while (1){
-        const int readStatus = dht20.read();
-        if (readStatus != DHT20_OK) {
-            Serial.print("DHT20 read failed, status: ");
-            Serial.println(readStatus);
-            vTaskDelay(pdMS_TO_TICKS(5000));
-            continue;
-        }
+        /* code */
+        
+        dht20.read();
+        // Reading temperature in Celsius
+        float temperature = dht20.getTemperature();
+        // Reading humidity
+        float humidity = dht20.getHumidity();
 
-        const float temperature = dht20.getTemperature();
-        const float humidity = dht20.getHumidity();
+        
+
+        // Check if any reads failed and exit early
         if (isnan(temperature) || isnan(humidity)) {
-            Serial.println("DHT20 returned invalid temperature or humidity.");
-            vTaskDelay(pdMS_TO_TICKS(5000));
-            continue;
+            Serial.println("Failed to read from DHT sensor!");
+            temperature = humidity =  -1;
+            //return;
         }
 
+        //Update global variables for temperature and humidity
         glob_temperature = temperature;
         glob_humidity = humidity;
 
+        // Print the results
+        
         Serial.print("Humidity: ");
         Serial.print(humidity);
         Serial.print("%  Temperature: ");
         Serial.print(temperature);
-        Serial.println(" C");
-
-        vTaskDelay(pdMS_TO_TICKS(5000));
+        Serial.println("°C");
+        
+        vTaskDelay(5000);
     }
+    
 }

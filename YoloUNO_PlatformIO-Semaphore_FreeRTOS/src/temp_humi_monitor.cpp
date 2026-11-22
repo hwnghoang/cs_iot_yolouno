@@ -1,4 +1,5 @@
 // SDA: GPIO 11   SCL: GPIO 12   Địa chỉ I2C DHT20: 0x38
+#include <Wire.h>
 #include "temp_humi_monitor.h"
 
 DHT20 dht20;
@@ -17,7 +18,10 @@ void task_sensor_reader(void *pvParameters) {
     (void)pvParameters;
 
     // Nếu không có cảm biến thật, dùng dữ liệu giả lập để vẫn minh họa được semaphore.
-    const bool sensorOk = dht20.begin(DHT20_SDA_PIN, DHT20_SCL_PIN) && dht20.isConnected();
+    // Khởi tạo I2C với chân SDA/SCL của YoloUNO, sau đó mới khởi tạo DHT20.
+    // (Tương thích cả thư viện DHT20 cũ lẫn bản mới chỉ có begin() không tham số.)
+    Wire.begin(DHT20_SDA_PIN, DHT20_SCL_PIN);
+    const bool sensorOk = dht20.begin() && dht20.isConnected();
     safeLog(sensorOk ? "DHT20 found at 0x38" : "DHT20 NOT found -> using SIMULATED data");
 
     while (1) {

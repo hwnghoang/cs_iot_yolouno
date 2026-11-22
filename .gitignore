@@ -14,7 +14,8 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
+# Chỉ bỏ qua lib/ ở gốc repo (Python); lib/ trong các project PlatformIO vẫn được commit
+/lib/
 lib64/
 parts/
 sdist/
@@ -221,3 +222,6 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Secrets (Wi-Fi password, CoreIOT access token)
+**/include/secrets.h
